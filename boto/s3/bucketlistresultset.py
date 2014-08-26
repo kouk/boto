@@ -19,6 +19,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+import urllib
+
 def bucket_lister(bucket, prefix='', delimiter='', marker='', headers=None,
                   encoding_type=None):
     """
@@ -34,6 +36,10 @@ def bucket_lister(bucket, prefix='', delimiter='', marker='', headers=None,
             yield k
         if k:
             marker = rs.next_marker or k.name
+        if marker and encoding_type == "url":
+            if isinstance(marker, unicode):
+                marker = marker.encode('utf-8')
+            marker = urllib.unquote(marker)
         more_results= rs.is_truncated
 
 class BucketListResultSet(object):
