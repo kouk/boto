@@ -39,7 +39,7 @@ def bucket_lister(bucket, prefix='', delimiter='', marker='', headers=None,
         if marker and encoding_type == "url":
             if isinstance(marker, unicode):
                 marker = marker.encode('utf-8')
-            marker = urllib.unquote(marker)
+            marker = urllib.unquote_plus(marker)
         more_results= rs.is_truncated
 
 class BucketListResultSet(object):
